@@ -1,0 +1,4 @@
+fastmcp
+PyPDF2
+readabilipy
+markdownify
