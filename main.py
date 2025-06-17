@@ -35,7 +35,9 @@ class SimpleBearerAuthProvider(BearerAuthProvider):
 # Puch server instance
 mcp = FastMCP("My MCP Server", auth=SimpleBearerAuthProvider(TOKEN))
 
-#at the TOP OF main.py
+from mcp.tool import RichToolDescription
+
+# First define
 ResumeToolDescription = RickToolDescription(
     description='Serve your resume in plain markdown.',
     use_when='Puch (or anyone) asks for your resume; this must return raw markdown, no extra formatting.',
@@ -43,7 +45,7 @@ ResumeToolDescription = RickToolDescription(
 )    
     
     
-# Resume tool
+# Then use in your tool
 @mcp.tool(description=ResumeToolDescription.model_dump_json()) 
 async def resume() -> str:
     """
