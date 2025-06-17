@@ -35,7 +35,14 @@ class SimpleBearerAuthProvider(BearerAuthProvider):
 # Puch server instance
 mcp = FastMCP("My MCP Server", auth=SimpleBearerAuthProvider(TOKEN))
 
-
+#at the TOP OF main.py
+ResumeToolDescription = RickToolDescription(
+    description='Serve your resume in plain markdown.',
+    use_when='Puch (or anyone) asks for your resume; this must return raw markdown, no extra formatting.',
+    side_effects=None,
+)    
+    
+    
 # Resume tool
 @mcp.tool(description=ResumeToolDescription.model_dump_json()) 
 async def resume() -> str:
@@ -43,7 +50,7 @@ async def resume() -> str:
     Return your resume in plain markdown text.
     """
     with open("resume.pdf", "rb") as f:
-        # normally you'd extract text here
+        # Normally you'd extract text here
         # or convert PDF to text first
         text = extract_pdf_text("resume.pdf")  # <- implement this
     return text
