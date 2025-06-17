@@ -8,8 +8,8 @@ from mcp.types import INTERNAL_ERROR, INVALID_PARAMS, TextContent
 from pydantic import AnyUrl, Field
 import readabilipy
 
-TOKEN = "<your_application_key>"  # Puch application key
-MY_NUMBER = "<your_phonenumber>"   # your phone number with country code (without +)
+TOKEN = "f6dd6073e8ff"  # Puch application key
+MY_NUMBER = "919511390234"   # your phone number with country code (without +)
 
 
 # Auth Provider
@@ -37,19 +37,15 @@ mcp = FastMCP("My MCP Server", auth=SimpleBearerAuthProvider(TOKEN))
 
 
 # Resume tool
-@mcp.tool
-async def resume():
-    """Serve your resume as plain markdown text."""
-    # Change this path to your own PDF
-    from PyPDF2 import PdfReader
-    
+@mcp.tool(description=ResumeToolDescription.model_dump_json()) 
+async def resume() -> str:
+    """
+    Return your resume in plain markdown text.
+    """
     with open("resume.pdf", "rb") as f:
-        text = ""
-
-        pdf = PdfReader(f)
-        for page in pdf.pages:
-            text += page.extract_text()
-        
+        # normally you'd extract text here
+        # or convert PDF to text first
+        text = extract_pdf_text("resume.pdf")  # <- implement this
     return text
 
 
